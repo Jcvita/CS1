@@ -14,18 +14,22 @@ import math
 
 def main():
     turtle.setworldcoordinates(-1, -1, 1000, 1000)
-    turtle.speed(0)
     turtle.penup()
     turtle.forward(150)
     turtle.pendown()
     draw_tree(50, 200, 50, 'brown', 'green')
     turtle.forward(150)
-    draw_house(100, 150, 50, 'blue', 'orange', 'green')
+    house_length = 100
+    big_house_height = 150
+    small_house_height = 75
+    draw_house(house_length, big_house_height, 50, 'blue', 'orange', 'green', 'yellow')
     turtle.forward(150)
-    draw_house(100, 75, 50, 'red', 'yellow', 'purple')
+    draw_house(house_length, small_house_height, 50, 'red', 'yellow', 'purple', 'green')
     turtle.forward(150)
     draw_tree(30, 150, 75, 'blue', 'pink')
-
+    print("Bigger house area: ", house_length * big_house_height)
+    print("Smaller house area: ", house_length * small_house_height)
+    print("Press the [x] button on the top of the window to close")
 
 def draw_triangle(base, height):
     """
@@ -94,7 +98,7 @@ def draw_window(size, color):
     turtle.penup()
 
 
-def draw_house(length, height, roof_height, wall_color, roof_color, window_color):
+def draw_house(length, height, roof_height, wall_color, roof_color, window_color, door_color):
     """
     :param length:
     :param height:
@@ -127,11 +131,14 @@ def draw_house(length, height, roof_height, wall_color, roof_color, window_color
     turtle.left(90)
     turtle.forward(length * 2 // 5)
     turtle.left(90)
+    turtle.fillcolor(door_color)
+    turtle.begin_fill()
     turtle.forward(height // 3)
     turtle.right(90)
     turtle.forward(length // 6)
     turtle.right(90)
     turtle.forward(height // 3)
+    turtle.end_fill()
     turtle.right(90)
     turtle.forward((length // 6) + (length * 2 // 5))
     turtle.left(180)
