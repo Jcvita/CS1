@@ -1,40 +1,31 @@
 """
 Joseph Vita
 
-Program uses two different types of recursion to find the
-greatest common divisor of a number
+Program uses two different methods to find the greatest common divisor
+of a number and prompts the user to choose which function to use.
 """
 
 
 def main():
     """
-    Main function runs everything that should be ran
+    Main function prompts the user to choose which gcd function to use
+    as well as the numbers to use and prints out the result.
     :return:
     """
-    test_gcd_rec()
-
-
-# def gcd_rec(a, b):
-#     """
-#     function prints
-#     :param a:
-#     :param b:
-#     :return:
-#     """
-#     if b <= 1 or a <= 1:
-#         print(1)
-#         return 0
-#     if b >= a:
-#         if b % a == 0:
-#             print(a)
-#             return 0
-#         return gcd_rec(b, a - 1)
-#     if a > b:
-#         if a % b == 0:
-#             print(b)
-#             return 0
-
-#     return gcd_rec(a, b - 1)
+    print("Select the GCD function to use:")
+    print()
+    print("1. Recursive")
+    print("2. Iterative")
+    print()
+    choice = input("Please select a function: ")
+    print()
+    first = int(input("Please enter the first number: "))
+    second = int(input("Please enter the second number: "))
+    print()
+    if choice == "1":
+        print("The greatest common denominator is ", gcd_rec(first, second))
+    elif choice == "2":
+        print("The greatest common denominator is ", gcd_iter(first, second))
 
 
 def gcd_rec(a, b):
@@ -44,14 +35,10 @@ def gcd_rec(a, b):
     :param b:
     :return:
     """
-    if a <= 0 or b <= 0:
-        print("N/A")
-        return 0
-    elif a == 1 or b == 1:
-        print("1")
-        return 1
-    if a >= b:
-        return gcd_rec(a, a % b)
+    if b == 0:
+        return a
+    else:
+        return gcd_rec(b, a % b)
 
 
 def gcd_iter(a, b):
@@ -64,7 +51,12 @@ def gcd_iter(a, b):
     :return:
     """
     if b == 0 or a == 0:
-        print('N/A')
+        if a == 0 and b != 0:
+            return b
+        elif b == 0 and a != 0:
+            return a
+        else:
+            return 0
         return 0
     if a > b:
         count = b
@@ -72,8 +64,7 @@ def gcd_iter(a, b):
         count = a
     while count > 0:
         if b % count == 0 and a % count == 0:
-            print(count)
-            return 0
+            return count
         count -= 1
 
 
@@ -81,26 +72,30 @@ def test_gcd_rec():
     """
     Tests gcd_rec by testing it against various different cases
     """
-    gcd_rec(1, 1)
-    gcd_rec(8, 16)
-    gcd_rec(16, 8)
-    gcd_rec(5, 7)
-    gcd_rec(0, 17)
-    gcd_rec(60, 144)
-
+    print(gcd_rec(1, 1))
+    print(gcd_rec(8, 16))
+    print(gcd_rec(16, 8))
+    print(gcd_rec(5, 7))
+    print(gcd_rec(0, 17))
+    print(gcd_rec(17, 0))
+    print(gcd_rec(60, 144))
 
 
 def test_gcd_iter():
-    gcd_iter(1, 1)
-    gcd_iter(8, 16)
-    gcd_iter(16, 8)
-    gcd_iter(5, 7)
-    gcd_iter(0, 17)
-    gcd_iter(60, 144)
+    """
+        Tests gcd_iter by testing it against various different cases
+    """
+    print(gcd_iter(1, 1))
+    print(gcd_iter(8, 16))
+    print(gcd_iter(16, 8))
+    print(gcd_iter(5, 7))
+    print(gcd_iter(0, 17))
+    print(gcd_iter(17, 0))
+    print(gcd_iter(60, 144))
 
 
 if __name__ == '__main__':
     # test_gcd_rec()
-    test_gcd_iter()
-    # main()
+    # test_gcd_iter()
+    main()
 
