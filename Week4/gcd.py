@@ -53,6 +53,7 @@ def gcd_rec(a, b):
     if a >= b:
         return gcd_rec(a, a % b)
 
+
 def gcd_iter(a, b):
     """
     determines the greatest common factor of 2 numbers using
