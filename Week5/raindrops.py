@@ -2,43 +2,37 @@
 Joseph Vita
 9/23/19
 CSCI-141 Herring
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 Python program draws a lake as well as random raindrops falling on the lake.
 Each rain drop creates a number of ripples that are not allowed to go past
 the bounds of the lake.
 """
 import turtle
 import random
+import math
 
-<<<<<<< HEAD
 LWIDTH = 700
 LHEIGHT = 600
 
-=======
->>>>>>> origin/master
 
 def main():
-    turtle.tracer(0, 0)
-    # turtle.speed(10)
+    # turtle.tracer(0, 0)
+    turtle.speed(20)
     turtle.screensize(800, 600)
+    turtle.colormode(255)
     # drip = int(input("How many raindrops should there be (1-100)? "))
     # if drip > 100 or drip < 1:
     #     print("Bruh moment! You can only have in between 1 and 100 raindrops.")
     #     exit()
     draw_pond()
     make_it_rain(100)
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
     turtle.done()
 
 
 def draw_pond():
     """
+    Draws and colors the pond area.
+
     precondition:pen facing east
     precondition:turtle up or down
     postcondition:turtle at top left of pond
@@ -48,7 +42,6 @@ def draw_pond():
     turtle.fillcolor('lightblue')
     turtle.begin_fill()
     turtle.up()
-<<<<<<< HEAD
     turtle.forward(LWIDTH // 2)
     turtle.left(90)
     turtle.down()
@@ -65,59 +58,30 @@ def draw_pond():
     turtle.up()
     turtle.left(90)
     turtle.forward(LWIDTH)
-=======
-    turtle.forward(600)
-    turtle.left(90)
-    turtle.down()
-    turtle.forward(500)
-    turtle.left(90)
-    turtle.forward(1200)
-    turtle.left(90)
-    turtle.forward(1000)
-    turtle.left(90)
-    turtle.forward(1200)
-    turtle.left(90)
-    turtle.forward(1000)
-    turtle.end_fill()
-    turtle.up()
-    turtle.left(90)
-    turtle.forward(1200)
->>>>>>> origin/master
     turtle.right(180)
 
 
 def make_it_rain(drops, accum=0):
     if accum < drops:
         diam = random.randint(1, 20)
-<<<<<<< HEAD
         draw_drop(random.randint(diam, LWIDTH - diam),
                   random.randint(int(diam * 1.5), LHEIGHT - diam),
-=======
-        draw_drop(random.randint(diam, 1200 - diam),
-                  random.randint(int(diam * 1.5), 1000 - diam),
->>>>>>> origin/master
-                  diam)
+                  diam,
+                  (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
         make_it_rain(drops, accum + 1)
     else:
-        return 0
+        return
 
 
-def draw_drop(x, y, diam):
+def draw_drop(x, y, diam, color):
     """
     Function draws a droplet of a random diameter at the given(random)
     coordinates
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
+    :param color:
     :param x:
     :param y:
     :param diam:
     :return:
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
     precondition: turtle up or down
     precondition: turtle on top left of screen
     precondition: turtle facing east
@@ -130,22 +94,51 @@ def draw_drop(x, y, diam):
     turtle.forward(y + diam // 2)
     turtle.left(90)
     turtle.down()
-    turtle.fillcolor('blue')
+    turtle.fillcolor(color)
     turtle.begin_fill()
     turtle.circle(diam)
     turtle.end_fill()
-    turtle.up()
-    turtle.left(90)
-    turtle.forward(y + diam // 2)
-    turtle.left(90)
-    turtle.forward(x)
-    turtle.right(180)
-
-# def draw_ripples(max, x, y):
+    draw_ripples(random.randint(3, 8), diam, x, y)
+    return math.pi * diam
 
 
-<<<<<<< HEAD
+def draw_ripples(ripples, initdiam, x, y):
+    """
+    precondition:turtle facing east
+    precondition:turtle located at the start of the ripple draw spot
+    :param initdiam: 
+    :param ripples:
+    :param x:
+    :param y:
+    :return:
+    """''
+    count = 0
+    diam = initdiam
+    # turtle.right(90)
+    nextl = x - diam
+    nextr = x + diam
+    nextt = y - diam
+    nextb = y + diam
+
+    while (count < ripples and
+            nextt >= 0 and
+            nextb <= 600 and
+            nextr <= 700 and
+            nextl >= 0):
+        diam += initdiam // 2
+        turtle.up()
+        turtle.right(90)
+        turtle.forward(initdiam // 2)
+        turtle.left(90)
+        turtle.down()
+        turtle.circle(diam)
+        turtle.up()
+        nextt -= initdiam // 2
+        nextb += initdiam // 2
+        nextl -= initdiam // 2
+        nextr += initdiam // 2
+        count += 1
+    turtle.setpos(-350, 300)
+
+
 main()
-=======
-main()
->>>>>>> origin/master
