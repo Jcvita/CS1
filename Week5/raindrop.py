@@ -98,7 +98,8 @@ def draw_drop(x, y, diam):
     turtle.forward(x)
     turtle.right(180)
 
-# def draw_ripples(max, x, y):
 
+def draw_ripples(max, x, y):
+    print('yeet')
 
 main()
