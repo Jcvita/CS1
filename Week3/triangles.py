@@ -18,9 +18,6 @@ def make_triangle(size, layers):
         param: layers
 
         precondition: pen is down
-        precondition: turtle is facing at a 120 degree angle
-        postcondition: turtle is facing at a 120 degree angle
-        postcondition: pen is down
     """
 
     if layers <= 0:

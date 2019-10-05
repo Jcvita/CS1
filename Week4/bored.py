@@ -4,8 +4,8 @@ from turtle import Screen
 import numpy as np
 
 
-im = Image.open('/home/joe/Documents/CS1/Week4/gottem.jpeg')
-turtle.speed(0)
+im = Image.open('C:\\Users\\Joe\\Documents\\CS1\\Week4\\monalisa.jpg')
+turtle.tracer(0, 0)
 turtle.screensize(len(list(np.asarray(im))[1]) + 100, len(list(np.asarray(im))) + 100)
 turtle.penup()
 turtle.setposition(-450, 388)
