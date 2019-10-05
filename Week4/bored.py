@@ -4,7 +4,7 @@ from turtle import Screen
 import numpy as np
 
 
-im = Image.open('C:\\Users\\Joe\\Documents\\CS1\\Week4\\monalisa.jpg')
+im = Image.open('C:\\Users\\jcvit\\Documents\\CS1\\Week4\\monalisa.jpg')
 turtle.tracer(0, 0)
 turtle.screensize(len(list(np.asarray(im))[1]) + 100, len(list(np.asarray(im))) + 100)
 turtle.penup()
