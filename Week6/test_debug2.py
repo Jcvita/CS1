@@ -43,7 +43,7 @@ the screenshot and answered questions).
 
 File:  test_debug2.py
 Author: CS @ RIT
-Author: (add your name here)
+Author: (Joseph Vita)
 
 """
 
@@ -60,9 +60,9 @@ def match(string1, string2):
 
     best_length = 0
     # for all possible string1 start points
-    for idx1 in range(len(string1)-1):
+    for idx1 in range(len(string1) - 1):
         # for all possible string2 start points
-        for idx2 in range(len(string2)-1):
+        for idx2 in range(len(string2) - 1):
             # check if these characters match
             if string1[idx1] == string2[idx2]:
                 this_match_count = 1
@@ -70,6 +70,9 @@ def match(string1, string2):
                 while string1[idx1 + this_match_count] == \
                         string2[idx2 + this_match_count]:
                     this_match_count += 1
+                    if idx1 + this_match_count >= len(string1) or \
+                            idx2 + this_match_count >= len(string2):
+                        break
 
                 # compare to best so far
                 if this_match_count > best_length:
@@ -77,3 +80,19 @@ def match(string1, string2):
 
     # now return the result
     return best_length
+
+
+def test():
+    print(match("established", "ballistic"))  # 3
+    print(match("qwertyuiop", "asdfghjkl"))  # 0
+    print(match("test", "test"))  # 4
+    print(match("qwertyuiop", "rtyu"))  # 4
+    print(match("qwertyuiop", "qwertyuiop"))  # 10
+    print(match("jflvnhsrlk", "ajksdhfoas"))  # 1
+    print(match("123456789", "987654321"))  # 1
+    print(match("ppppp", "bbbbpppppp"))  # 5
+    print(match("ppppp", "ppppppppbbbbpppppp"))  # 5
+    print(match("", ""))  # 0
+
+
+test()

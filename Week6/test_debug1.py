@@ -80,22 +80,34 @@ def caesar(original, codeword):
     # have identical shift for it to be a valid Caesar shift.
     shift = ord(codeword[0]) - ord(original[0])
 
+    if len(codeword) != len(original):  # fixes error if codeword and
+        return -1  # original aren't the same length
+
     for idx in range(len(codeword)):
-        if ord(codeword[idx]) - ord(original[idx]) != shift:
+        shifted = ord(codeword[idx]) - ord(original[idx])
+
+        if shift < 0:
+            shift += 26
+
+        if shifted < 0:
+            shifted += 26
+
+        if shifted != shift:
             return -1
 
-    return shift
+    return shifted
 
 
 def test():
-    print(caesar('very', 'ajwd'))
-    print(caesar('yeet', 'sdfa'))
-    print(caesar('abcd', 'fghi'))
-    print(caesar('opqr', 'hijk'))
-    print(caesar('AbCdE', 'fGhIj'))
-    print(caesar('Hello', 'Mjqqt'))
-    print(caesar('sauce', 'sauce'))
-    print(caesar('lmno', 'wxyz'))
+    print(caesar('VERY', 'AJWD'))  # 5
+    print(caesar('YEET', 'SDFA'))  # -1
+    print(caesar('ABCD', 'FGHI'))  # 5
+    print(caesar('OPQR', 'HIJK'))  # 19
+    print(caesar('HELLO', 'IFMMP'))  # 1
+    print(caesar('SAUCE', 'SAUCE'))  # 0
+    print(caesar('BCDE', 'WXYZ'))  # 21
+    print(caesar('ABCD', 'YZAB'))  # 24
+    print(caesar('LMAO', 'LMAOROFL'))  # -1
 
 
 test()
