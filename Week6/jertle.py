@@ -1,6 +1,10 @@
 """
 jertle.py
-YOUR DESCRIPTION AND NAME HERE
+Joseph Vita
+
+jertle.py takes in a text file written in jertle and translates it to turtle
+commands. it detects various errors that can happen in jertle and throws errors
+accordingly.
 """
 
 # Notice that this program runs as is.
@@ -40,52 +44,111 @@ ILLEGAL_COMMAND = 1  # Unrecognized command string            #
 MISSING_ARGUMENT = 2 # More arguments needed for this command #
 NO_ARG_END = 3       # Can't find the matching closing brace  #
                                                               #
+
+
 ###############################################################
-def locate_beginning_of_arg(str):
+
+
+def contains(str, char):
+    isin = False
     for x in range(len(str)):
-        if str[x] == '{':
-            return x
+        if str[x] == char:
+            isin = True
+    return isin
+
+
+def locate_beginning_of_arg(str):
+    if contains(str, '{'):
+        for x in range(len(str)):
+            if str[x] == '{':
+                return x
+    else:
+        return -1
 
 
 def locate_end_of_arg(str):
-    for x in range(len(str)):
-        if str[x] == '}':
-            return x
-
+    if contains(str, '}'):
+        for x in range(len(str)):
+            if str[x] == '}':
+                return x
+    else:
+        return -1
 
 
 def interpret(program):
+    """
+    translates jertle text file chosen by the user. also throws 1 of 3 errors
+    based on turtle syntax errors.
+
+    precondition:file is selected
+    precondition:turtle is set to a desired position
+
+    :param program:
+    :return:
+    """
+    split = program.split('\n')
+    program = ''
+    for line in split:
+        program += line
+
+    print (program)
+    program_backup = program
     while len(program) > 0:
         if locate_end_of_arg(program) < locate_beginning_of_arg(program):
-            error("Missing opening brace for argument", 1)
+            error("Missing opening brace for argument", 2)
         else:
-            program = program[locate_end_of_arg(program) + 1:]9
+            program = program[locate_end_of_arg(program) + 1:]
 
+    program = program_backup
+
+    last = ''
+    while len(program) > 0:
+        if locate_beginning_of_arg(program) == -1 or \
+            locate_end_of_arg(program) == -1:
+            break
+        elif last == '{' and locate_beginning_of_arg(program) < locate_end_of_arg(program):
+            error("Can't find matching closing brace", 3)
+        elif locate_beginning_of_arg(program) < locate_end_of_arg(program):
+            last = '{'
+            program = program[locate_beginning_of_arg(program) + 1:]
+            # print(last)
+        elif locate_beginning_of_arg(program) > locate_end_of_arg(program):
+            last = '}'
+            program = program[locate_end_of_arg(program) + 1:]
+            # print(last)
+
+
+    program = program_backup
 
     while len(program) > 0:
-        if program[0:2] == FORWARD_CMD:
+        if program[0:locate_beginning_of_arg(program)] == FORWARD_CMD:
             x = locate_end_of_arg(program)
             num = program[3:x]
-            turtle.forward(num)
+            turtle.forward(int(float(num)))
             program = program[x + 1:]
-        elif program[0:2] == TURN_CMD:
+        elif program[0:locate_beginning_of_arg(program)] == TURN_CMD:
             x = locate_end_of_arg(program)
             num = program[3:x]
+            turtle.left(int(float(num)))
             program = program[x + 1:]
-        elif program[0:2] == CIRCLE_CMD:
+        elif program[0:locate_beginning_of_arg(program)] == CIRCLE_CMD:
             x = locate_end_of_arg(program)
             num = program[3:x]
+            turtle.circle(int(float(num)))
             program = program[x + 1:]
         elif program[0:2] == PENDOWN_CMD:
             x = locate_end_of_arg(program)
-            num = program[3:x]
+            turtle.pendown()
             program = program[x + 1:]
         elif program[0:2] == PENUP_CMD:
             x = locate_end_of_arg(program)
-            num = program[3:x]
+            turtle.penup()
             program = program[x + 1:]
         else:
-            error("Illegal Command '{}'".format(program[0:2]), 1)
+            error("Illegal Command '{}'".format(
+                program[0:locate_beginning_of_arg(program)]), 1)
+
+
 def error( msg, e_code ):
     """
     A fatal error has occurred.
@@ -105,6 +168,7 @@ def initialize():
     turtle.setup( WINDOW_SIZE, WINDOW_SIZE )
     turtle.setworldcoordinates( -MARGIN, -MARGIN, WORLD_SIZE, WORLD_SIZE )
 
+
 def main():
     """
     Read Jertle program strings from a file and execute them.
@@ -113,9 +177,12 @@ def main():
     :return: None
     """
     initialize()
-    file = open(input("Jertle file? "))
-    interpret(file)
+    file = input("Jertle file? ")
+    file = open(file)
+    interpret(file.read())
     turtle.done()
+    time.sleep(SLEEP_TIME)
+
 
 if __name__ == "__main__":
     main()
